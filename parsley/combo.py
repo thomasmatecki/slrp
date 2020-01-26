@@ -8,42 +8,6 @@ class Combinable(ABC):
 
     """
 
-    @classmethod
-    def parse(cls, builder, expression, exact=True):
-        """
-
-    :param builder:
-    :param expression:
-    :param exact: Return a `None` if the complete `expression`
-                  is not parsed(i.e. build returns a tail).
-    :return:
-    """
-        built = builder.build(expression)
-
-        if exact and built[1]:
-            return None  # ... or maybe throw?
-
-        return built[0]
-
-    def build(self, expr):
-        raise NotImplementedError()
-
-    def __lshift__(self, expression):
-        return Combinable.parse(self, expression, exact=False)
-
-    def __rshift__(self, _callable: Callable):
-        return Match(self, _callable)
-
-    def extract(self, expr: Any) -> Union[tuple, None]:
-        parsed = self.build(expr)
-
-        if not parsed:
-            return
-        elif isinstance(parsed[0], tuple):
-            return parsed
-        else:
-            return (parsed[0],), parsed[1]
-
     def __mul__(self, other):
         return Then(self, other)
 
@@ -61,9 +25,6 @@ class Combinable(ABC):
 
     def __or__(self, other):
         return Either(self, other)
-
-    def __pow__(self, other, modulo=None):
-        return Then(self, Many(other),)
 
 
 class Either(Combinable):
@@ -150,32 +111,13 @@ class Many(Combinable):
 
         return args, tail
 
-
-class Match(Combinable):
-    """
-
-    """
-
-    def __init__(self, extractor, _callable: Callable = tuple):
-        self._extractor = extractor
-        self._callable = _callable
-
-    def build(self, expr):
-        extracted = self._extractor.extract(expr)
-
-        if extracted:
-            args, tail = extracted
-            return self._callable(*args), tail
-
-
-
 class Lazy(Combinable):
     """
 
       .. code-block::
       Foo(*args0..., Foo(*args1..., Foo(...))) ).
 
-  """
+    """
 
     def __init__(self, extr_call):
         assert callable(extr_call)
