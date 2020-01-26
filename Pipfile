@@ -12,6 +12,7 @@ wheel = "*"
 twine = "*"
 pytest = "*"
 isort = "*"
+sphinx = "*"
 
 [packages]
 parsley = {path = ".",editable = true}

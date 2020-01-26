@@ -8,22 +8,22 @@ class Combinable(ABC):
 
     """
 
-    def __mul__(self, other):
+    def __mul__(self, other) -> "Then":
         return Then(self, other)
 
-    def __sub__(self, other):
+    def __sub__(self, other) -> "Then":
         return Then(self, Maybe(other))
 
-    def __neg__(self):
+    def __neg__(self) -> "Maybe":
         return Maybe(self)
 
-    def __add__(self, other):
+    def __add__(self, other) -> "Then":
         return Then(self, Many(other))
 
-    def __pos__(self):
+    def __pos__(self) -> "Many":
         return Many(self)
 
-    def __or__(self, other):
+    def __or__(self, other) -> "Either":
         return Either(self, other)
 
 
@@ -81,6 +81,7 @@ class Maybe(Combinable):
         else:
             return (), expr
 
+
 class Many(Combinable):
     def __init__(self, extractor: Combinable):
         self.extr = extractor
@@ -110,6 +111,7 @@ class Many(Combinable):
                 args = args + next_args
 
         return args, tail
+
 
 class Lazy(Combinable):
     """
