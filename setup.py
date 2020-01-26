@@ -4,7 +4,7 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="parkuor", 
+    name="slrp", 
     version="0.0.0",
     author="Thomas Matecki",
     author_email="thomas.matecki@gmail.com",
