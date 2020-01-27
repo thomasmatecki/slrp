@@ -1,4 +1,4 @@
-from parsley import RE, S
+from slrp import RE, S
 
 integer_literal = RE(r"(\d+)")
 single_space = RE(r"\s")

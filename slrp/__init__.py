@@ -1,5 +1,5 @@
-from parsley.expressions import RegExpr, StringExpr
-from parsley.combo import Lazy
+from slrp.expressions import RegExpr, StringExpr
+from slrp.combo import Lazy
 
 # Abbreviations
 L = Lazy

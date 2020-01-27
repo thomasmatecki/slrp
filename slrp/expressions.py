@@ -1,6 +1,6 @@
 from typing import Tuple, Callable, Text
 from abc import ABC
-from parsley.combo import Combinable
+from slrp.combo import Combinable
 import re
 
 
