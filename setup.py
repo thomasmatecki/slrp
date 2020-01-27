@@ -4,14 +4,14 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="slrp", 
+    name="slrp",
     version="0.0.0",
     author="Thomas Matecki",
     author_email="thomas.matecki@gmail.com",
-    description="A Parser Combinator Library",
+    description="A Simple Parser Combinator Library",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/thomasmatecki/parsley",
+    url="https://github.com/thomasmatecki/slrp",
     packages=setuptools.find_packages(),
     classifiers=[
         "Programming Language :: Python :: 3",
