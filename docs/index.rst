@@ -6,6 +6,8 @@
 Welcome to slrp's documentation!
 ================================
 
+slrp (pronounced /slərp/) is a simple parser combinator library.
+
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
