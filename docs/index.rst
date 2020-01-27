@@ -10,6 +10,13 @@ Welcome to slrp's documentation!
    :maxdepth: 2
    :caption: Contents:
 
+API Documentation
+-----------------
+
+.. toctree::
+   :maxdepth: 2
+
+   api
 
 
 Indices and tables
