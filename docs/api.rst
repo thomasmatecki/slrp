@@ -4,12 +4,12 @@ API Documentation
 Combinators
 -----------
 
-.. autoclass:: slrp.combo.Combinable
-.. autoclass:: slrp.combo.Either
-.. autoclass:: slrp.combo.Then
-.. autoclass:: slrp.combo.Maybe
-.. autoclass:: slrp.combo.Many
-.. autoclass:: slrp.combo.Lazy
+.. autoclass:: slrp.combos.Combinable
+.. autoclass:: slrp.combos.Either
+.. autoclass:: slrp.combos.Then
+.. autoclass:: slrp.combos.Maybe
+.. autoclass:: slrp.combos.Many
+.. autoclass:: slrp.combos.Lazy
 
 Expression Matchers
 -------------------

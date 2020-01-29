@@ -1,7 +1,8 @@
-from typing import Tuple, Callable, Text
-from abc import ABC
-from slrp.combo import Combinable
 import re
+from abc import ABC
+from typing import Callable, Text, Tuple
+
+from slrp.combos import Combinable
 
 
 class RegExpr(Combinable):

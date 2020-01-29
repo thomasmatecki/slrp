@@ -1,5 +1,5 @@
+from slrp.combos import Lazy
 from slrp.expressions import RegExpr, StringExpr
-from slrp.combo import Lazy
 
 # Abbreviations
 L = Lazy

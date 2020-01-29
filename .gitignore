@@ -2,7 +2,7 @@ MANIFEST
 .cache/
 build/
 docs/_build
-parsley.egg-info/
+slrp.egg-info/
 *.pyc
 *.swp
 *.egg
