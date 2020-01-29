@@ -1,3 +1,6 @@
+"""
+Expression for matching.
+"""
 import re
 from abc import ABC
 from typing import Callable, Text, Tuple
@@ -7,6 +10,7 @@ from slrp.combos import Combinable
 
 class RegExpr(Combinable):
     """
+    Regular expression matcher.
     """
 
     def __init__(self, pattern):
@@ -20,6 +24,9 @@ class RegExpr(Combinable):
 
 
 class StringExpr(Combinable):
+    """
+    String Expression Matcher.
+    """
     def __init__(self, string: str, capture=False):
         self.string = string
         self.capture = capture

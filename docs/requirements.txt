@@ -1,0 +1,14 @@
+alabaster==0.7.12
+cryptography==2.8
+docutils==0.16
+readme-renderer==24.0
+six==1.14.0
+../slrp
+snowballstemmer==2.0.0
+Sphinx==2.3.1
+sphinxcontrib-applehelp==1.0.1
+sphinxcontrib-devhelp==1.0.1
+sphinxcontrib-htmlhelp==1.0.2
+sphinxcontrib-jsmath==1.0.1
+sphinxcontrib-qthelp==1.0.2
+sphinxcontrib-serializinghtml==1.1.3

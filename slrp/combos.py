@@ -1,3 +1,6 @@
+"""
+Combinators.
+"""
 import re
 from abc import ABC
 from typing import Any, Callable, Text, Tuple, Union
@@ -5,7 +8,9 @@ from typing import Any, Callable, Text, Tuple, Union
 
 class Combinable(ABC):
     """
-
+    An abstract class extended by concrete combinator classes and
+    expression parsers. This class implements the operator methods,
+    all of which return combinators
     """
 
     def __mul__(self, other) -> "Then":

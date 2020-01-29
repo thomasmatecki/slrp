@@ -13,10 +13,11 @@
 import os
 import sys
 
+import slrp.combos
+import slrp.expressions
+
 # sys.path.insert(0, os.path.abspath('.'))
 sys.path.insert(0, os.path.abspath(".."))
-import slrp.combo
-import slrp.expressions
 
 # -- Project information -----------------------------------------------------
 
