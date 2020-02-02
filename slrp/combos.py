@@ -142,19 +142,16 @@ class Many(Combinable):
         self.extr = extractor
 
     def match(self, expr):
-        extracted = self.extr.match(expr)
+        tail = expr
+        args = tuple()
 
-        if not extracted:
-            return None
+        while tail:
+            extracted = self.extr.match(tail)
+            if not extracted:
+                return args, tail
 
-        args, tail = extracted
-
-        if tail != expr:
-            next_extracted = self.match(tail)
-
-            if next_extracted:
-                next_args, tail = next_extracted
-                args = args + next_args
+            matched, tail = extracted
+            args += matched
 
         return args, tail
 
