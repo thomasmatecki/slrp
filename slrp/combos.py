@@ -190,7 +190,7 @@ class Lazy(Combinable):
         assert callable(extr_call)
         self._extr_call = extr_call
 
-    def build(self, expr):
+    def match(self, expr):
         extractor = self._extr_call()
 
         extracted = extractor.extract(expr)
