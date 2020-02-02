@@ -2,8 +2,16 @@
 Combinators.
 """
 import re
-from abc import ABC
-from typing import Any, Callable, Text, Tuple, Union
+from abc import ABC, abstractmethod
+from typing import Any, Callable, Text, Tuple, Union, TypeVar
+
+
+class Matcher(ABC):
+    T = TypeVar("T")
+
+    @abstractmethod
+    def match(self, expr: T) -> T:
+        raise NotImplementedError()
 
 
 class Combinable(ABC):
@@ -14,6 +22,16 @@ class Combinable(ABC):
     """
 
     def __mul__(self, other) -> "Then":
+        """Return a matcher for self _then_ other.
+
+        :param other:
+        :type other: Matcher
+        ...
+        :raises [ErrorType]: [ErrorDescription]
+        ...
+        :return: [ReturnDescription]
+        :rtype: [ReturnType]
+        """
         return Then(self, other)
 
     def __sub__(self, other) -> "Then":
@@ -50,7 +68,7 @@ class Either(Combinable):
 
 class Then(Combinable):
     """
-
+    Match some expression, followed by another expression.
     """
 
     def __init__(self, first, then: Combinable):
