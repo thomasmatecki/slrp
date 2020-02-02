@@ -85,10 +85,16 @@ class Combinable(Matcher):
         """
         return Either(self, other)
 
-    def __mod__(self, applicable) -> "Either":
+    def __mod__(self, call) -> "Either":
+        """Create a matcher that matches `self`'s expression then passes it to callable as
+        positional args.
+
+        :param other: A matcher `self`
+        :type other: `Matcher`
+        :return: the match from self, passed to `call`
+        :rtype: `Apply`
         """
-        """
-        return Apply(self, applicable)
+        return Apply(self, call)
 
 
 class Then(Combinable):
@@ -131,6 +137,7 @@ class Maybe(Combinable):
 class Many(Combinable):
     """Match an expression repeatedly.
     """
+
     def __init__(self, extractor: Combinable):
         self.extr = extractor
 
@@ -151,6 +158,7 @@ class Many(Combinable):
 
         return args, tail
 
+
 class Either(Combinable):
     """Match on of two expressions.
     """
@@ -166,14 +174,16 @@ class Either(Combinable):
         else:
             return self._right.match(expr)
 
+
 class Apply(Combinable):
-    def __init__(self, matcher, callable: Callable):
+    def __init__(self, matcher, call: Callable):
         self._matcher = matcher
-        self._callable = callable
+        self._call = call
 
     def match(self, expr):
-        matched, tail = self.matcher.match(expr)
-        return self._callable(*matched)
+        matched, tail = self._matcher.match(expr)
+        return (self._call(*matched),), tail
+
 
 class Lazy(Combinable):
     """

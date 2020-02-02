@@ -13,6 +13,7 @@ env/
 .pytest_cache/
 .vscode/
 .eggs/
+.idea/
 
 .workon
 dist

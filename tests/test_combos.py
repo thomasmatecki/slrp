@@ -1,5 +1,7 @@
 from slrp import RE, S
 
+import pytest
+
 integer_literal = RE(r"(\d+)")
 single_space = RE(r"\s")
 string_literal = RE(r"(\w+)")
@@ -12,16 +14,19 @@ def test_simple_expression():
     assert remaining == " muffins"
 
 
-def test_or_operator():
+@pytest.mark.parametrize(
+    "input_expression,expected_parsed,expected_remaining",
+    [
+        ("31 muffins", ("31",), " muffins"),
+        ("thirty-one muffins", ("thirty",), "-one muffins"),
+    ],
+)
+def test_or_operator(input_expression, expected_parsed, expected_remaining):
     muffin_count = integer_literal | string_literal
 
-    parsed, remaining = muffin_count.match("31 muffins")
-    assert parsed == ("31",)
-    assert remaining == " muffins"
-
-    parsed, remaining = muffin_count.match("thirty-one muffins")
-    assert parsed == ("thirty",)
-    assert remaining == "-one muffins"
+    parsed, remaining = muffin_count.match(input_expression)
+    assert parsed == expected_parsed
+    assert remaining == expected_remaining
 
 
 def test_then_operator():
@@ -33,40 +38,48 @@ def test_then_operator():
     assert remaining == ""
 
 
-def test_maybe_operator():
+@pytest.mark.parametrize(
+    "grammar,input_expression,expected_parsed,expected_remaining",
+    [
+        (
+            integer_literal - single_space * string_literal,
+            "31 muffins",
+            ("31", "muffins"),
+            "",
+        ),
+        (integer_literal - single_space * string_literal, "31 ", ("31",), " ",),
+        (
+            (integer_literal - single_space) * string_literal,
+            "31muffins",
+            ("31", "muffins"),
+            "",
+        ),
+        (
+            (integer_literal - single_space) * string_literal,
+            "31 muffins",
+            ("31", "muffins"),
+            "",
+        ),
+        (
+            integer_literal - single_space - string_literal,
+            "31muffins",
+            ("31", "muffins"),
+            "",
+        ),
+        (
+            integer_literal - single_space - string_literal,
+            "31 muffins",
+            ("31", "muffins"),
+            "",
+        ),
+        (integer_literal - single_space - string_literal, "31", ("31",), ""),
+    ],
+)
+def test_maybe_operator(grammar, input_expression, expected_parsed, expected_remaining):
 
-    muffin_count = integer_literal - single_space * string_literal
-
-    parsed, remaining = muffin_count.match("31 muffins")
-    assert parsed == ("31", "muffins")
-    assert remaining == ""
-
-    parsed, remaining = muffin_count.match("31 ")
-    assert parsed == ("31",)
-    assert remaining == " "
-
-    muffin_count = (integer_literal - single_space) * string_literal
-
-    parsed, remaining = muffin_count.match("31muffins")
-    assert parsed == ("31", "muffins")
-    assert remaining == ""
-
-    parsed, remaining = muffin_count.match("31 muffins")
-    assert parsed == ("31", "muffins")
-    assert remaining == ""
-
-    muffin_count = integer_literal - single_space - string_literal
-    parsed, remaining = muffin_count.match("31muffins")
-    assert parsed == ("31", "muffins")
-    assert remaining == ""
-
-    parsed, remaining = muffin_count.match("31 muffins")
-    assert parsed == ("31", "muffins")
-    assert remaining == ""
-
-    parsed, remaining = muffin_count.match("31")
-    assert parsed == ("31",)
-    assert remaining == ""
+    parsed, remaining = grammar.match(input_expression)
+    assert parsed == expected_parsed
+    assert remaining == expected_remaining
 
 
 def test_maybe_unary_operator():
@@ -112,3 +125,11 @@ def test_many_operator():
     )
     assert parsed == expected
     assert remaining == ""
+
+
+def test_apply_operator():
+
+    muffin_count = integer_literal % int * single_space * string_literal
+    parsed, remaining = muffin_count.match("31 muffins")
+
+    assert parsed == (31, "muffins")
