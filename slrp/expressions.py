@@ -27,6 +27,7 @@ class StringExpr(Combinable):
     """
     String Expression Matcher.
     """
+
     def __init__(self, string: str, capture=False):
         self.string = string
         self.capture = capture
