@@ -5,6 +5,7 @@ Combinators
 -----------
 
 .. autoclass:: slrp.combos.Combinable
+   :members: __mul__:
 .. autoclass:: slrp.combos.Either
 .. autoclass:: slrp.combos.Then
 .. autoclass:: slrp.combos.Maybe
